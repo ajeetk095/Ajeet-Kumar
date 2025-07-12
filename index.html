@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +7,1401 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Existing styles remain unchanged */
-        /* New animation styles */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        :root {
+            --primary: #0066cc;
+            --secondary: #00a0dc;
+            --accent: #ff6b6b;
+            --dark: #1d2228;
+            --light: #f5f8fa;
+            --gray: #8a99b5;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .animated-element {
-            animation: float 3s ease-in-out infinite;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .education-card, .skill-card {
-            transition: all 0.5s ease;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0c1a25, #152535, #1c2e46);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
         }
         
-        .education-card:hover, .skill-card:hover {
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 102, 204, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 160, 220, 0.15) 0%, transparent 20%);
+            z-index: -1;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 160, 220, 0.3);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--secondary);
+        }
+        
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+            z-index: 10;
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero h1 span {
+            color: var(--secondary);
+            position: relative;
+        }
+        
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 90%;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 160, 220, 0.6);
+        }
+        
+        .hero-image {
+            position: relative;
+            width: clamp(250px, 30vw, 400px);
+            height: clamp(250px, 30vw, 400px);
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(0, 160, 220, 0.3);
+            box-shadow: 0 0 50px rgba(0, 102, 204, 0.5);
+            margin-left: auto;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .hero-image:hover img {
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 160, 220, 0.5);
+        }
+        
+        /* Floating Progress Cards */
+        .progress-cards-container {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 999;
+            transition: var(--transition);
+            max-width: 80%;
+            overflow-x: auto;
+            padding: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) rgba(0,0,0,0.1);
+        }
+        
+        .progress-cards-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .progress-cards-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        
+        .progress-cards-container::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+        
+        .progress-card {
+            background: rgba(29, 34, 40, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 180px;
+            width: 180px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 160, 220, 0.3);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .close-card {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-card:hover {
+            color: var(--accent);
+        }
+        
+        .progress-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .platform-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        
+        .geeksforgeeks .platform-icon { background: rgba(41, 171, 135, 0.2); color: #29ab87; }
+        .leetcode .platform-icon { background: rgba(250, 167, 0, 0.2); color: #faa700; }
+        .github .platform-icon { background: rgba(36, 41, 46, 0.2); color: #ffffff; }
+        
+        .progress-card h4 {
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 6px;
+            margin: 8px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+        }
+        
+        .geeksforgeeks .progress-bar { background: linear-gradient(90deg, #29ab87, #0d8a6a); }
+        .leetcode .progress-bar { background: linear-gradient(90deg, #faa700, #ff8c00); }
+        .github .progress-bar { background: linear-gradient(90deg, #6cc644, #3f9c35); }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .progress-card a {
+            margin-top: 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--secondary);
+            padding: 4px;
+            border-radius: 5px;
+            font-size: 11px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .progress-card a:hover {
+            background: rgba(0, 160, 220, 0.2);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 8rem 10%;
+            min-height: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section:nth-child(even) {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 160, 220, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 8px 25px rgba(0, 160, 220, 0.3);
+        }
+        
+        .timeline-date {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            top: 20px;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: calc(50% - 10px);
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: calc(50% - 10px);
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 160, 220, 0.2);
+            transition: var(--transition);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(0, 160, 220, 0.3);
+        }
+        
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 160, 220, 0.2);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 35px rgba(0, 160, 220, 0.3);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .project-tag {
+            background: rgba(0, 160, 220, 0.2);
+            color: var(--secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .ongoing-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .contact-item:hover {
+            background: rgba(0, 160, 220, 0.1);
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 160, 220, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* Chatbot */
+        .chatbot-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .chatbot-trigger:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 160, 220, 0.7);
+        }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background: rgba(29, 34, 40, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(0, 160, 220, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        
+        .chatbot-container.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .chatbot-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chatbot-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-chatbot {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .chatbot-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .chat-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+        
+        .bot-message {
+            background: rgba(0, 160, 220, 0.2);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .user-message {
+            background: rgba(0, 102, 204, 0.3);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 1rem;
+            background: rgba(29, 34, 40, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .chatbot-input button {
+            background: var(--secondary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chatbot-input button:hover {
+            background: var(--primary);
+            transform: rotate(15deg);
+        }
+        
+        .mic-btn {
+            background: var(--accent) !important;
+        }
+        
+        .mic-btn.listening {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+        
+        /* Footer with Admin Panel */
+        .footer {
+            padding: 3rem 5% 0;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(0, 160, 220, 0.2);
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 3rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--secondary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* Admin Panel in Footer */
+        .admin-footer {
+            background: rgba(29, 34, 40, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(0, 160, 220, 0.3);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-toggle-btn {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .admin-toggle-btn:hover {
+            background: var(--primary);
+        }
+        
+        .admin-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .admin-content.active {
+            max-height: 1000px;
+            transition: max-height 0.8s ease-in;
+        }
+        
+        .admin-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .admin-section h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+        
+        .status-indicator.active {
+            background: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+        }
+        
+        .sync-btn {
+            background: var(--secondary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        
+        .sync-btn:hover {
+            background: var(--primary);
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        /* Progress Cards Toggle */
+        .card-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--secondary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .hero-content {
+                margin-top: 5rem;
+                text-align: center;
+                margin: 0 auto;
+            }
+            
+            .hero-image {
+                margin: 2rem auto;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 70px;
+                padding-right: 20px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 20px;
+            }
+            
+            .progress-cards-container {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                width: 100%;
+                margin-top: 2rem;
+                padding: 0 5%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(29, 34, 40, 0.95);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .projects-grid,
+            .education-container,
+            .certifications-container,
+            .volunteering-container,
+            .honors-container,
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chatbot-container {
+                width: 300px;
+                height: 400px;
+                right: 15px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Voice Assistant Indicator */
+        .voice-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1001;
+        }
+        
+        .voice-indicator.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Resume Button */
+        .resume-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .resume-btn:hover {
+            background: rgba(0, 160, 220, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Admin Login */
+        .admin-login {
+            max-width: 400px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        .admin-login h2 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .admin-login input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+        }
+        
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* LinkedIn Data Sections */
+        .linkedin-data-section {
+            margin-top: 4rem;
+        }
+        
+        .linkedin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .linkedin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 160, 220, 0.2);
+            transition: var(--transition);
+        }
+        
+        .linkedin-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 8px 25px rgba(0, 160, 220, 0.3);
+        }
+        
+        .linkedin-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .linkedin-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .linkedin-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .linkedin-badge {
+            background: rgba(0, 160, 220, 0.2);
+            color: var(--secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        .language-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .language-progress {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+        
+        .post-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-content {
+            margin: 10px 0;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .sync-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.5s ease;
+            display: none;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        /* Mobile-specific flashcard styles */
+        @media (max-width: 768px) {
+            .progress-cards-container {
+                position: static;
+                flex-direction: column;
+                max-width: 100%;
+                padding: 0 5%;
+                margin-top: 2rem;
+            }
+            
+            .progress-card {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -72,7 +1447,7 @@
             <h1>Hi, I'm <span id="heroName">Ajeet Kumar</span></h1>
             <p id="heroHeadline">Senior Software Engineer & UX Specialist with 8+ years of experience in creating innovative digital solutions that drive business growth and enhance user experiences.</p>
             <a href="#contact" class="btn">Get in Touch</a>
-            <a href="/api/resume" class="resume-btn"><i class="fas fa-download"></i> Download Resume</a>
+            <a href="#" class="resume-btn"><i class="fas fa-download"></i> Download Resume</a>
             <div style="margin-top: 20px;">
                 <p><i class="fas fa-microphone-alt"></i> Try saying: "Tell me about your experience" or "What are your skills?"</p>
             </div>
@@ -83,7 +1458,59 @@
         
         <!-- Floating Progress Cards -->
         <div class="progress-cards-container" id="progressCards">
-            <!-- Cards remain unchanged -->
+            <div class="progress-card geeksforgeeks">
+                <button class="close-card">&times;</button>
+                <div class="progress-card-header">
+                    <div class="platform-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h4>GeekForGeeks</h4>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 85%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>Solved</span>
+                    <span>85%</span>
+                </div>
+                <a href="#" target="_blank">View Profile</a>
+            </div>
+            
+            <div class="progress-card leetcode">
+                <button class="close-card">&times;</button>
+                <div class="progress-card-header">
+                    <div class="platform-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>LeetCode</h4>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 75%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>Solved</span>
+                    <span>75%</span>
+                </div>
+                <a href="#" target="_blank">View Profile</a>
+            </div>
+            
+            <div class="progress-card github">
+                <button class="close-card">&times;</button>
+                <div class="progress-card-header">
+                    <div class="platform-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h4>GitHub</h4>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 90%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>Contribs</span>
+                    <span>90%</span>
+                </div>
+                <a href="#" target="_blank">View Profile</a>
+            </div>
         </div>
     </section>
 
@@ -92,7 +1519,17 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <!-- Content remains unchanged -->
+                <p id="aboutText">I'm a passionate software engineer with expertise in full-stack development, cloud architecture, and user experience design. My mission is to build solutions that not only solve complex problems but also delight users with intuitive interfaces and seamless interactions.</p>
+                <br>
+                <p>With a background in computer science and design thinking, I bridge the gap between technical implementation and user-centered design. I specialize in React ecosystems, Node.js backends, and cloud-native applications.</p>
+                <br>
+                <p>When I'm not coding, you can find me contributing to open-source projects, mentoring junior developers, or exploring new technologies that push the boundaries of what's possible in digital experiences.</p>
+                
+                <!-- Languages Section -->
+                <div class="linkedin-data-section">
+                    <h3><i class="fas fa-language"></i> Languages</h3>
+                    <div class="linkedin-grid" id="languagesContainer"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -102,7 +1539,7 @@
         <div class="container">
             <h2 class="section-title">Experience</h2>
             <div class="timeline" id="experienceTimeline">
-                <!-- Content remains unchanged -->
+                <!-- Experience items will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -112,7 +1549,7 @@
         <div class="container">
             <h2 class="section-title">Education</h2>
             <div class="timeline" id="educationTimeline">
-                <!-- Content remains unchanged -->
+                <!-- Education items will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -122,7 +1559,7 @@
         <div class="container">
             <h2 class="section-title">Skills & Expertise</h2>
             <div class="skills-container" id="skillsContainer">
-                <!-- Content remains unchanged -->
+                <!-- Skills will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -132,7 +1569,7 @@
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="projects-grid" id="projectsContainer">
-                <!-- Content remains unchanged -->
+                <!-- Projects will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -142,45 +1579,93 @@
         <div class="container">
             <h2 class="section-title">Licenses & Certifications</h2>
             <div class="linkedin-grid" id="certificationsContainer">
-                <!-- Content remains unchanged -->
+                <!-- Certifications will be populated by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section (Now includes Honors, Volunteering, Recommendations, and Courses) -->
+    <!-- Honors & Awards Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Honors & Awards</h2>
+            <div class="linkedin-grid" id="honorsContainer">
+                <!-- Honors will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Courses</h2>
+            <div class="linkedin-grid" id="coursesContainer">
+                <!-- Courses will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteering Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Volunteering</h2>
+            <div class="linkedin-grid" id="volunteeringContainer">
+                <!-- Volunteering will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Posts Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Recent Posts</h2>
+            <div id="postsContainer">
+                <!-- Posts will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Recommendations</h2>
+            <div class="linkedin-grid" id="recommendationsContainer">
+                <!-- Recommendations will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
     <section id="gallery" class="section">
         <div class="container">
-            <h2 class="section-title">Achievements Gallery</h2>
-            
-            <!-- Honors & Awards Section -->
-            <div class="gallery-section">
-                <h3><i class="fas fa-trophy"></i> Honors & Awards</h3>
-                <div class="linkedin-grid" id="honorsContainer"></div>
-            </div>
-            
-            <!-- Volunteering Section -->
-            <div class="gallery-section">
-                <h3><i class="fas fa-hands-helping"></i> Volunteering</h3>
-                <div class="linkedin-grid" id="volunteeringContainer"></div>
-            </div>
-            
-            <!-- Recommendations Section -->
-            <div class="gallery-section">
-                <h3><i class="fas fa-quote-left"></i> Recommendations</h3>
-                <div class="linkedin-grid" id="recommendationsContainer"></div>
-            </div>
-            
-            <!-- Courses Section -->
-            <div class="gallery-section">
-                <h3><i class="fas fa-book"></i> Courses</h3>
-                <div class="linkedin-grid" id="coursesContainer"></div>
-            </div>
-            
-            <!-- Project Gallery -->
-            <div class="gallery-section">
-                <h3><i class="fas fa-images"></i> Project Gallery</h3>
-                <div class="gallery-grid">
-                    <!-- Gallery items remain unchanged -->
+            <h2 class="section-title">Project Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80" alt="Project 1">
+                    <div class="gallery-caption">
+                        <h4>E-commerce Platform</h4>
+                        <p>AI-powered shopping experience</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1715&q=80" alt="Project 2">
+                    <div class="gallery-caption">
+                        <h4>Financial Dashboard</h4>
+                        <p>Real-time analytics platform</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Project 3">
+                    <div class="gallery-caption">
+                        <h4>Health Tracker</h4>
+                        <p>Mobile fitness application</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581094794329-aa7b0c1c130a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Project 4">
+                    <div class="gallery-caption">
+                        <h4>Cloud Migration</h4>
+                        <p>Enterprise cloud transformation</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,7 +1673,84 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <!-- Content remains unchanged -->
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p id="contactEmail">ajeet.kumar@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p id="contactPhone">+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Location</h3>
+                            <p id="contactLocation">San Francisco, California</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div>
+                            <h3>LinkedIn</h3>
+                            <p id="contactLinkedIn">linkedin.com/in/ajeek095</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div>
+                            <h3>GitHub</h3>
+                            <p id="contactGithub">github.com/ajeetkumar</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div>
+                            <h3>Website</h3>
+                            <p id="contactWebsite">ajeetkumar.dev</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Chatbot -->
@@ -202,7 +1764,7 @@
         </div>
         <div class="chatbot-body">
             <div class="chat-message bot-message">
-                You are welcome, I am Ajeet's AI assistant. How can I help you?
+                Hello! I'm your AI assistant. What's your name?
             </div>
         </div>
         <div class="chatbot-input">
@@ -214,7 +1776,116 @@
 
     <!-- Footer with Integrated Admin Panel -->
     <footer class="footer">
-        <!-- Content remains unchanged -->
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Ajeet Kumar</h3>
+                    <p>Senior Software Engineer & UX Specialist creating innovative digital solutions.</p>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/ajeek095" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
+                        <a href="#about"><i class="fas fa-chevron-right"></i> About</a>
+                        <a href="#experience"><i class="fas fa-chevron-right"></i> Experience</a>
+                        <a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a>
+                        <a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-chevron-right"></i> GitHub</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> CodePen</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Dev.to</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Medium</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-envelope"></i> ajeet.kumar@example.com</a>
+                        <a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a>
+                        <a href="#"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Panel Integrated in Footer -->
+            <div class="admin-footer">
+                <div class="admin-header">
+                    <h3>Admin Dashboard</h3>
+                    <button class="admin-toggle-btn" id="adminToggle">
+                        <i class="fas fa-cog"></i> Toggle Admin
+                    </button>
+                </div>
+                
+                <div class="admin-content" id="adminContent">
+                    <div class="admin-section">
+                        <h4><i class="fas fa-sync"></i> Sync Status</h4>
+                        <div class="sync-status">
+                            <div class="status-indicator active"></div>
+                            <p>LinkedIn Sync: Active</p>
+                        </div>
+                        <button class="sync-btn" id="linkedinSyncBtn">Sync Now</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h4><i class="fas fa-chart-bar"></i> Analytics</h4>
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <div class="stat-value">8+</div>
+                                <p>Years Experience</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">24</div>
+                                <p>Projects</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">12</div>
+                                <p>Skills</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">58</div>
+                                <p>Connections</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h4><i class="fas fa-sliders-h"></i> Settings</h4>
+                        <div class="card-toggle">
+                            <label>Show Progress Cards:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="cardsToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h4><i class="fas fa-tasks"></i> Content Sync</h4>
+                        <button class="sync-btn">Sync Experience</button>
+                        <button class="sync-btn">Sync Skills</button>
+                        <button class="sync-btn">Sync Projects</button>
+                        <button class="sync-btn">Sync Education</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Ajeet Kumar. All rights reserved.
+            </div>
+        </div>
     </footer>
 
     <!-- Admin Login Modal -->
@@ -223,156 +1894,386 @@
         <input type="text" placeholder="Username" id="adminUsername">
         <input type="password" placeholder="Password" id="adminPassword">
         <button class="btn" id="adminLoginBtn">Login</button>
-        
-        <!-- File Upload Section -->
-        <div id="adminUploadSection" style="display: none; margin-top: 20px;">
-            <h3><i class="fas fa-cloud-upload-alt"></i> Upload Files</h3>
-            <div class="form-group">
-                <label for="fileType">File Type</label>
-                <select id="fileType" class="form-group input">
-                    <option value="resume">Resume</option>
-                    <option value="image">Image</option>
-                    <option value="video">Video</option>
-                    <option value="document">Document</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="adminFileUpload">Select File</label>
-                <input type="file" id="adminFileUpload">
-            </div>
-            <button class="btn" id="adminUploadBtn">Upload</button>
-        </div>
     </div>
 
     <script>
-        // Enhanced LinkedIn data with real-time integration
-        async function fetchLinkedInData() {
-            try {
-                // Show sync notification
-                document.getElementById('syncNotification').style.display = 'flex';
-                
-                // In a real implementation, this would fetch from LinkedIn API
-                const response = await fetch('/api/linkedin');
-                const data = await response.json();
-                
-                // Hide sync notification after 3 seconds
-                setTimeout(() => {
-                    document.getElementById('syncNotification').style.display = 'none';
-                }, 3000);
-                
-                return data;
-            } catch (error) {
-                console.error('Error fetching LinkedIn data:', error);
-                return linkedInData; // Fallback to mock data
-            }
-        }
-
-        // Enhanced chatbot with professional female voice
-        function speakResponse(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 1.0;
-                utterance.pitch = 1.2; // Higher pitch for female voice
-                utterance.volume = 1.0;
-                
-                // Try to find a female voice
-                const voices = speechSynthesis.getVoices();
-                const femaleVoice = voices.find(voice => 
-                    voice.name.includes('female') || 
-                    voice.name.includes('Karen') || // Australian English female
-                    voice.name.includes('Samantha') // US English female
-                );
-                
-                if (femaleVoice) {
-                    utterance.voice = femaleVoice;
+        // Mock LinkedIn data
+        const linkedInData = {
+            profile: {
+                name: "Ajeet Kumar",
+                headline: "Senior Software Engineer & UX Specialist",
+                about: "I'm a passionate software engineer with expertise in full-stack development, cloud architecture, and user experience design. My mission is to build solutions that not only solve complex problems but also delight users with intuitive interfaces and seamless interactions.",
+                profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                contact: {
+                    email: "ajeet.kumar@example.com",
+                    phone: "+1 (555) 123-4567",
+                    location: "San Francisco, California",
+                    linkedin: "linkedin.com/in/ajeek095",
+                    github: "github.com/ajeetkumar",
+                    website: "ajeetkumar.dev"
                 }
-                
-                speechSynthesis.speak(utterance);
-            }
+            },
+            experience: [
+                {
+                    title: "Senior Software Engineer",
+                    company: "Tech Innovations Inc.",
+                    period: "2020 - Present",
+                    description: "Leading development of enterprise SaaS platform serving 50k+ users. Implemented microservices architecture reducing latency by 40%."
+                },
+                {
+                    title: "Full Stack Developer",
+                    company: "Digital Solutions Ltd.",
+                    period: "2018 - 2020",
+                    description: "Developed and maintained multiple web applications using React and Node.js. Improved application performance by 35%."
+                },
+                {
+                    title: "Frontend Developer",
+                    company: "Creative Web Agency",
+                    period: "2016 - 2018",
+                    description: "Created responsive interfaces for clients across various industries. Won 'Employee of the Year' for exceptional project delivery."
+                },
+                {
+                    title: "Junior Developer",
+                    company: "StartUp Innovations",
+                    period: "2014 - 2016",
+                    description: "Assisted in building MVP products and prototypes. Learned agile development methodologies and modern tech stacks."
+                }
+            ],
+            education: [
+                {
+                    institution: "Stanford University",
+                    degree: "Master of Computer Science",
+                    period: "2012 - 2014",
+                    description: "Specialized in Artificial Intelligence and User Experience Design"
+                },
+                {
+                    institution: "IIT Delhi",
+                    degree: "Bachelor of Technology in Computer Science",
+                    period: "2008 - 2012",
+                    description: "Graduated with honors, focused on software engineering principles"
+                }
+            ],
+            skills: [
+                { name: "React Ecosystem", icon: "fab fa-react", description: "React, Redux, Next.js, Gatsby, React Native" },
+                { name: "Backend Development", icon: "fas fa-server", description: "Node.js, Express, MongoDB, PostgreSQL, REST APIs" },
+                { name: "Cloud & DevOps", icon: "fas fa-cloud", description: "AWS, Docker, Kubernetes, CI/CD, Serverless" },
+                { name: "UI/UX Design", icon: "fas fa-brush", description: "Figma, Adobe XD, User Research, Prototyping" },
+                { name: "Python", icon: "fab fa-python", description: "Django, Flask, Data Analysis, Machine Learning" },
+                { name: "Mobile Development", icon: "fas fa-mobile-alt", description: "React Native, Flutter, iOS & Android" }
+            ],
+            certifications: [
+                { name: "AWS Certified Solutions Architect", issuer: "Amazon", date: "2022" },
+                { name: "Google Cloud Professional", issuer: "Google", date: "2021" },
+                { name: "CISSP", issuer: "ISC2", date: "2020" },
+                { name: "React Advanced Concepts", issuer: "Frontend Masters", date: "2019" }
+            ],
+            projects: [
+                { 
+                    name: "Enterprise E-commerce Platform", 
+                    description: "Scalable e-commerce solution with AI recommendations", 
+                    period: "2021 - Present",
+                    tags: ["React", "Node.js", "MongoDB", "AWS"],
+                    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80"
+                },
+                { 
+                    name: "Financial Analytics Dashboard", 
+                    description: "Real-time financial data visualization platform", 
+                    period: "2020",
+                    tags: ["React", "D3.js", "Express", "PostgreSQL"],
+                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1715&q=80"
+                },
+                { 
+                    name: "Health Tracking Mobile App", 
+                    description: "Mobile application for fitness and health monitoring", 
+                    period: "2019",
+                    tags: ["React Native", "Firebase", "HealthKit", "Google Fit"],
+                    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                },
+                { 
+                    name: "Cloud Migration Strategy", 
+                    description: "Enterprise cloud transformation for legacy systems", 
+                    period: "2018",
+                    tags: ["AWS", "Docker", "Kubernetes", "Terraform"],
+                    image: "https://images.unsplash.com/photo-1581094794329-aa7b0c1c130a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+                }
+            ],
+            honors: [
+                { name: "Best UX Design 2023", issuer: "Tech Innovation Awards", date: "2023" },
+                { name: "Top 10 Innovators", issuer: "Digital Leaders Summit", date: "2022" },
+                { name: "Open Source Contributor Award", issuer: "Mozilla Foundation", date: "2021" }
+            ],
+            courses: [
+                { name: "Advanced React Patterns", platform: "Frontend Masters", date: "2023" },
+                { name: "Cloud Architecture", platform: "AWS Academy", date: "2022" },
+                { name: "UX Research Methods", platform: "Interaction Design Foundation", date: "2021" }
+            ],
+            languages: [
+                { name: "English", proficiency: 100 },
+                { name: "Hindi", proficiency: 100 },
+                { name: "Spanish", proficiency: 70 }
+            ],
+            volunteering: [
+                { role: "Open Source Contributor", organization: "Mozilla Foundation", period: "2020-Present" },
+                { role: "Coding Mentor", organization: "Code for Good", period: "2019-2021" },
+                { role: "Tech Workshop Instructor", organization: "Local Community Center", period: "2018-2020" }
+            ],
+            recommendations: [
+                { 
+                    author: "John Smith", 
+                    position: "CTO at Tech Innovations", 
+                    content: "Ajeet is an exceptional engineer who combines technical expertise with creative problem-solving. His ability to bridge the gap between complex technical requirements and user-friendly interfaces is remarkable.",
+                    date: "2023"
+                },
+                { 
+                    author: "Sarah Johnson", 
+                    position: "Product Manager", 
+                    content: "Working with Ajeet was a pleasure. He consistently delivered high-quality solutions while maintaining a user-centered approach. His UX insights significantly improved our product's adoption rate.",
+                    date: "2022"
+                }
+            ],
+            posts: [
+                {
+                    title: "The Future of React in 2023",
+                    content: "Exploring the latest trends and upcoming features in the React ecosystem...",
+                    date: "2 days ago",
+                    likes: 45,
+                    comments: 12
+                },
+                {
+                    title: "Building Accessible Web Applications",
+                    content: "A comprehensive guide to creating web applications that are accessible to all users...",
+                    date: "1 week ago",
+                    likes: 78,
+                    comments: 21
+                }
+            ]
+        };
+
+        // Function to populate LinkedIn data
+        function populateLinkedInData() {
+            // Profile data
+            document.getElementById('heroName').textContent = linkedInData.profile.name;
+            document.getElementById('heroHeadline').textContent = linkedInData.profile.headline;
+            document.getElementById('aboutText').textContent = linkedInData.profile.about;
+            
+            // Profile images
+            document.getElementById('profileImage').src = linkedInData.profile.profileImage;
+            document.getElementById('heroProfileImage').src = linkedInData.profile.profileImage;
+            
+            // Contact info
+            document.getElementById('contactEmail').textContent = linkedInData.profile.contact.email;
+            document.getElementById('contactPhone').textContent = linkedInData.profile.contact.phone;
+            document.getElementById('contactLocation').textContent = linkedInData.profile.contact.location;
+            document.getElementById('contactLinkedIn').textContent = linkedInData.profile.contact.linkedin;
+            document.getElementById('contactGithub').textContent = linkedInData.profile.contact.github;
+            document.getElementById('contactWebsite').textContent = linkedInData.profile.contact.website;
+            
+            // Experience
+            const experienceTimeline = document.getElementById('experienceTimeline');
+            experienceTimeline.innerHTML = linkedInData.experience.map(exp => `
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">${exp.period}</div>
+                        <h3>${exp.title}</h3>
+                        <h4>${exp.company}</h4>
+                        <p>${exp.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Education
+            const educationTimeline = document.getElementById('educationTimeline');
+            educationTimeline.innerHTML = linkedInData.education.map(edu => `
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">${edu.period}</div>
+                        <h3>${edu.degree}</h3>
+                        <h4>${edu.institution}</h4>
+                        <p>${edu.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Skills
+            const skillsContainer = document.getElementById('skillsContainer');
+            skillsContainer.innerHTML = linkedInData.skills.map(skill => `
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="${skill.icon}"></i>
+                    </div>
+                    <h3>${skill.name}</h3>
+                    <p>${skill.description}</p>
+                </div>
+            `).join('');
+            
+            // Certifications
+            const certificationsContainer = document.getElementById('certificationsContainer');
+            certificationsContainer.innerHTML = linkedInData.certifications.map(cert => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-certificate"></i> ${cert.name}</h3>
+                    <div class="linkedin-item">
+                        <p><strong>Issuer:</strong> ${cert.issuer}</p>
+                        <p><strong>Date:</strong> ${cert.date}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Projects
+            const projectsContainer = document.getElementById('projectsContainer');
+            projectsContainer.innerHTML = linkedInData.projects.map(project => `
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="${project.image}" alt="${project.name}">
+                    </div>
+                    <div class="project-content">
+                        <h3>${project.name}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-tags">
+                            ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                        </div>
+                        <p><small>${project.period}</small></p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Honors & Awards
+            const honorsContainer = document.getElementById('honorsContainer');
+            honorsContainer.innerHTML = linkedInData.honors.map(honor => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-trophy"></i> ${honor.name}</h3>
+                    <div class="linkedin-item">
+                        <p><strong>Issuer:</strong> ${honor.issuer}</p>
+                        <p><strong>Date:</strong> ${honor.date}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Courses
+            const coursesContainer = document.getElementById('coursesContainer');
+            coursesContainer.innerHTML = linkedInData.courses.map(course => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-book"></i> ${course.name}</h3>
+                    <div class="linkedin-item">
+                        <p><strong>Platform:</strong> ${course.platform}</p>
+                        <p><strong>Date:</strong> ${course.date}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Volunteering
+            const volunteeringContainer = document.getElementById('volunteeringContainer');
+            volunteeringContainer.innerHTML = linkedInData.volunteering.map(vol => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-hands-helping"></i> ${vol.role}</h3>
+                    <div class="linkedin-item">
+                        <p><strong>Organization:</strong> ${vol.organization}</p>
+                        <p><strong>Period:</strong> ${vol.period}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Recommendations
+            const recommendationsContainer = document.getElementById('recommendationsContainer');
+            recommendationsContainer.innerHTML = linkedInData.recommendations.map(rec => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-quote-left"></i> Recommendation</h3>
+                    <div class="linkedin-item">
+                        <p>"${rec.content}"</p>
+                        <div style="margin-top: 15px;">
+                            <p><strong>${rec.author}</strong></p>
+                            <p>${rec.position}</p>
+                            <p><small>${rec.date}</small></p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Languages
+            const languagesContainer = document.getElementById('languagesContainer');
+            languagesContainer.innerHTML = linkedInData.languages.map(lang => `
+                <div class="linkedin-card">
+                    <h3><i class="fas fa-language"></i> ${lang.name}</h3>
+                    <div class="language-bar">
+                        <div class="language-progress" style="width: ${lang.proficiency}%"></div>
+                    </div>
+                    <div class="linkedin-badge">${lang.proficiency}% Proficiency</div>
+                </div>
+            `).join('');
+            
+            // Posts
+            const postsContainer = document.getElementById('postsContainer');
+            postsContainer.innerHTML = linkedInData.posts.map(post => `
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="${linkedInData.profile.profileImage}" alt="Ajeet Kumar">
+                        </div>
+                        <div>
+                            <h4>Ajeet Kumar</h4>
+                            <p>${post.date}</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h4>${post.title}</h4>
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-stats">
+                        <span><i class="fas fa-thumbs-up"></i> ${post.likes} likes</span>
+                        <span><i class="fas fa-comment"></i> ${post.comments} comments</span>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Enhanced chatbot with AI integrations
-        async function queryAI(message) {
-            try {
-                // This would integrate with various AI services
-                const response = await fetch('/api/ai-query', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ query: message })
-                });
-                
-                const data = await response.json();
-                return data.response;
-            } catch (error) {
-                console.error('Error querying AI:', error);
-                return "I'm having trouble connecting to the knowledge base. Please try again later.";
-            }
-        }
-
-        // Language detection and adaptation
-        function detectUserLanguage() {
-            const userLang = navigator.language || navigator.userLanguage;
-            const supportedLangs = ['en', 'es', 'fr', 'de', 'zh', 'hi', 'ar', 'pt', 'ru', 'ja'];
-            const primaryLang = userLang.split('-')[0];
-            
-            return supportedLangs.includes(primaryLang) ? primaryLang : 'en';
-        }
-
-        // Apply language-specific adaptations
-        function applyLanguageSettings(lang) {
-            // This would translate UI elements and content
-            console.log(`Applying language settings for: ${lang}`);
-            
-            // Set lang attribute on html element
-            document.documentElement.lang = lang;
-            
-            // Add RTL support for Arabic
-            if (lang === 'ar') {
-                document.body.style.direction = 'rtl';
-            }
-        }
-
-        // Enhanced chatbot functionality
-        async function enhancedGenerateResponse(message) {
-            const portfolioKeywords = [
-                'ajeet', 'experience', 'skills', 'projects', 'education', 
-                'certifications', 'about', 'resume', 'contact', 'work'
-            ];
-            
-            const hasPortfolioKeyword = portfolioKeywords.some(keyword => 
-                message.toLowerCase().includes(keyword)
-            );
-            
-            if (hasPortfolioKeyword) {
-                // Answer from portfolio data
-                return generateResponse(message);
-            } else {
-                // Query external AI services
-                return await queryAI(message);
-            }
-        }
-
-        // Initialize language settings
-        applyLanguageSettings(detectUserLanguage());
-
-        // Add animations to education and skills sections
-        document.querySelectorAll('.education-card, .skill-card').forEach(card => {
-            card.classList.add('animated-element');
+        // Toggle mobile menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
-
-        // Enhanced chatbot initialization
+        
+        // Chatbot functionality
+        const chatbotTrigger = document.querySelector('.chatbot-trigger');
+        const chatbotContainer = document.querySelector('.chatbot-container');
+        const closeChatbot = document.querySelector('.close-chatbot');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('sendBtn');
+        const micBtn = document.getElementById('micBtn');
+        const chatBody = document.querySelector('.chatbot-body');
+        const voiceIndicator = document.querySelector('.voice-indicator');
+        
+        let visitorName = '';
+        let isFirstMessage = true;
+        
         chatbotTrigger.addEventListener('click', () => {
             chatbotContainer.classList.toggle('active');
-            if (chatbotContainer.classList.contains('active')) {
-                // Speak the welcome message
-                speakResponse("You are welcome, I am Ajeet's AI assistant. How can I help you?");
+            if (chatbotContainer.classList.contains('active') && isFirstMessage) {
+                speakResponse("Welcome to my portfolio! I'm your AI assistant. What's your name?");
             }
         });
-
-        // Update the sendMessage function to use the enhanced response generator
-        async function sendMessage() {
+        
+        closeChatbot.addEventListener('click', () => {
+            chatbotContainer.classList.remove('active');
+            if (visitorName) {
+                speakResponse(`Thank you for visiting, ${visitorName}! Feel free to come back anytime.`);
+            } else {
+                speakResponse("Thank you for visiting! Feel free to come back anytime.");
+            }
+        });
+        
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+        
+        function sendMessage() {
             const message = chatInput.value.trim();
             if (message) {
                 addMessage(message, true);
@@ -381,66 +2282,275 @@
                 if (isFirstMessage) {
                     visitorName = message;
                     isFirstMessage = false;
-                    const response = `Nice to meet you, ${visitorName}! How can I assist you today?`;
+                    const response = `Nice to meet you, ${visitorName}! How can I assist you today? You can ask about my experience, skills, projects, or education.`;
                     addMessage(response);
                     speakResponse(response);
                 } else {
                     // Process message and generate response
-                    const response = await enhancedGenerateResponse(message);
-                    addMessage(response);
-                    speakResponse(response);
+                    setTimeout(() => {
+                        const response = generateResponse(message);
+                        addMessage(response);
+                        speakResponse(response);
+                    }, 1000);
                 }
             }
         }
-
-        // Admin file upload functionality
-        document.getElementById('adminUploadBtn').addEventListener('click', async function() {
-            const fileInput = document.getElementById('adminFileUpload');
-            const fileType = document.getElementById('fileType').value;
+        
+        function generateResponse(message) {
+            const lowerMsg = message.toLowerCase();
             
-            if (fileInput.files.length === 0) {
-                alert('Please select a file to upload');
+            if (lowerMsg.includes('experience')) {
+                return "Ajeet has over 8 years of experience in software engineering and UX design. He has worked on enterprise applications, SaaS platforms, and innovative digital solutions across various industries.";
+            } else if (lowerMsg.includes('skill')) {
+                return "Ajeet specializes in React, Node.js, cloud architecture, and UX design. He's proficient in modern JavaScript frameworks, backend development, and creating seamless user experiences.";
+            } else if (lowerMsg.includes('project')) {
+                return "Some of Ajeet's notable projects include an enterprise e-commerce platform, a financial analytics dashboard, and a health tracking mobile app. You can see more in the Projects section.";
+            } else if (lowerMsg.includes('contact')) {
+                return "You can contact Ajeet through the contact form on this website or connect with him on LinkedIn: linkedin.com/in/ajeek095";
+            } else if (lowerMsg.includes('education')) {
+                return "Ajeet holds a Master's in Computer Science from Stanford University and a Bachelor's from IIT. He's currently pursuing advanced certifications in cloud architecture.";
+            } else if (lowerMsg.includes('certification')) {
+                return "Ajeet has several certifications including AWS Solutions Architect, Google Cloud Professional, and CISSP. You can see all his certifications in the Certifications section.";
+            } else if (lowerMsg.includes('about')) {
+                return "Ajeet is a Senior Software Engineer with expertise in full-stack development and UX design. He's passionate about creating innovative digital solutions and mentoring junior developers.";
+            } else if (lowerMsg.includes('resume')) {
+                return "You can download Ajeet's resume by clicking the 'Download Resume' button on the homepage.";
+            } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+                return `Hello ${visitorName}! How can I assist you today?`;
+            } else {
+                return "I'm sorry, I don't have information about that yet. I'll make sure to ask Ajeet to add this information. Is there anything else I can help you with?";
+            }
+        }
+        
+        // Speech Synthesis
+        function speakResponse(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                speechSynthesis.speak(utterance);
+            }
+        }
+        
+        // Speech Recognition
+        let recognition;
+        try {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            
+            recognition.onstart = function() {
+                micBtn.classList.add('listening');
+                voiceIndicator.classList.add('active');
+            };
+            
+            recognition.onend = function() {
+                micBtn.classList.remove('listening');
+                voiceIndicator.classList.remove('active');
+            };
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                chatInput.value = transcript;
+                sendMessage();
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event.error);
+                micBtn.classList.remove('listening');
+                voiceIndicator.classList.remove('active');
+                addMessage("Sorry, I didn't catch that. Could you please try again?");
+            };
+            
+            micBtn.addEventListener('click', function() {
+                if (micBtn.classList.contains('listening')) {
+                    recognition.stop();
+                } else {
+                    try {
+                        // Ask for permission
+                        if (window.confirm("Allow microphone access for voice commands?")) {
+                            recognition.start();
+                        }
+                    } catch (e) {
+                        addMessage("Microphone access blocked. Please allow access in your browser settings.");
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Speech recognition not supported", e);
+            micBtn.style.display = 'none';
+            addMessage("Voice commands are not supported in your browser. Please use Chrome or Edge.");
+        }
+        
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Admin panel functionality in footer
+        const adminToggleBtn = document.getElementById('adminToggle');
+        const adminContent = document.getElementById('adminContent');
+        const cardsToggle = document.getElementById('cardsToggle');
+        const progressCards = document.getElementById('progressCards');
+        const closeCardButtons = document.querySelectorAll('.close-card');
+        const adminLogin = document.getElementById('adminLogin');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const linkedinSyncBtn = document.getElementById('linkedinSyncBtn');
+        const syncNotification = document.getElementById('syncNotification');
+        let isAdminLoggedIn = false;
+        
+        // LinkedIn sync simulation
+        linkedinSyncBtn.addEventListener('click', () => {
+            syncNotification.style.display = 'flex';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                populateLinkedInData();
+                syncNotification.innerHTML = '<i class="fas fa-check-circle"></i> LinkedIn data synced successfully!';
+                
+                setTimeout(() => {
+                    syncNotification.style.display = 'none';
+                }, 3000);
+            }, 2000);
+        });
+        
+        adminToggleBtn.addEventListener('click', () => {
+            if (!isAdminLoggedIn) {
+                adminLogin.style.display = 'block';
                 return;
             }
+            adminContent.classList.toggle('active');
+            adminToggleBtn.innerHTML = adminContent.classList.contains('active') ? 
+                '<i class="fas fa-times"></i> Hide Admin' : '<i class="fas fa-cog"></i> Toggle Admin';
+        });
+        
+        adminLoginBtn.addEventListener('click', () => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
             
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-            formData.append('type', fileType);
-            
-            try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    alert('File uploaded successfully!');
-                    
-                    // Update resume link if applicable
-                    if (fileType === 'resume') {
-                        document.querySelector('.resume-btn').href = result.fileUrl;
-                    }
-                } else {
-                    alert('Error uploading file: ' + result.message);
-                }
-            } catch (error) {
-                console.error('Upload error:', error);
-                alert('Error uploading file. Please try again.');
+            // In a real implementation, this would be verified on the server
+            if (username === 'admin' && password === 'password') {
+                isAdminLoggedIn = true;
+                adminLogin.style.display = 'none';
+                adminContent.classList.add('active');
+                adminToggleBtn.innerHTML = '<i class="fas fa-times"></i> Hide Admin';
+            } else {
+                alert('Invalid credentials. Try admin/password for demo');
             }
         });
-
-        // Initialize LinkedIn data
-        fetchLinkedInData().then(data => {
-            linkedInData = data;
-            populateLinkedInData();
+        
+        // Toggle progress cards visibility
+        cardsToggle.addEventListener('change', function() {
+            if (this.checked) {
+                progressCards.style.display = 'flex';
+            } else {
+                progressCards.style.display = 'none';
+            }
         });
-
-        // Auto-sync with LinkedIn every 7 days
-        setInterval(async () => {
-            linkedInData = await fetchLinkedInData();
-            populateLinkedInData();
-        }, 7 * 24 * 60 * 60 * 1000); // 7 days
+        
+        // Close individual cards
+        closeCardButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+        
+        // Simulate LinkedIn sync
+        const syncBtns = document.querySelectorAll('.sync-btn');
+        const statusIndicator = document.querySelector('.status-indicator');
+        
+        syncBtns.forEach(btn => {
+            if (btn.id !== 'linkedinSyncBtn') {
+                btn.addEventListener('click', function() {
+                    const originalText = this.textContent;
+                    this.textContent = "Syncing...";
+                    statusIndicator.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        this.textContent = "Sync Complete!";
+                        statusIndicator.classList.add('active');
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    }, 1500);
+                });
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.section, .skill-card, .project-card, .timeline-content, .education-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        document.querySelectorAll('.section, .skill-card, .project-card, .timeline-content, .education-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! Ajeet will get back to you soon.');
+            this.reset();
+        });
+        
+        // Voice command listener for the whole page
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'v' && recognition && !recognition.recording) {
+                try {
+                    recognition.start();
+                } catch (err) {
+                    addMessage("Voice activation failed. Please click the microphone button instead.");
+                }
+            }
+        });
+        
+        // Initialize LinkedIn data
+        populateLinkedInData();
+        
+        // Hide sync notification initially
+        syncNotification.style.display = 'none';
+        adminLogin.style.display = 'none';
     </script>
 </body>
 </html>
